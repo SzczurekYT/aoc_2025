@@ -36,17 +36,12 @@ fn solve(input: &str) -> i16 {
 fn rotate(state: i16, direction: Direction, distance: i16) -> i16 {
     match direction {
         Direction::Left => {
-            let value = state - distance;
-            // This works for the small inputs we get
-            // if value < 0 { 99 % value.abs() } else { value }
-            value % 100
+            state - distance
         }
         Direction::Right => {
-            let value = state + distance;
-            value % 100
-            // if value > 99 { value % 100 } else { value }
+            state + distance
         }
-    }
+    }.rem_euclid(100)
 }
 
 #[cfg(test)]
@@ -77,7 +72,7 @@ L82";
 
     #[test]
     fn test_rotate_underflow() {
-        assert_eq!(rotate(5, Direction::Left, 101), 3);
+        assert_eq!(rotate(5, Direction::Left, 101), 4);
     }
 
     #[test]
